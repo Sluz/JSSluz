@@ -10,8 +10,13 @@
     };
 
     module.Dependencies.prototype.loadDependencies = function () {
+        var self = this;
         if (this.dependenciesList.length > 0) {
-            this.loadScript(this.dependenciesList.shift(), this.loadDependencies);
+            this.loadScript(this.dependenciesList.shift(), function(evt) {
+                self.loadDependencies();
+            });
+        } else {
+            module.event.dispatchEvent(new Event('load'));
         }
     };
 

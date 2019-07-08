@@ -11,13 +11,13 @@
      */
     module.Event = function (queryElement) {
         var self = this;
-        if (queryElement === 'undefined') {
+        if (typeof queryElement === 'undefined') {
             self.eventElement = document.createElement('div');
         } else {
             self.eventElement = document.querySelector(queryElement);
         }
 
-        if (self.eventElement === 'undefined') {
+        if (typeof self.eventElement === 'undefined') {
             return null;
         } else {
             return this;
@@ -89,7 +89,7 @@
         var self = this;
         delay = delay || 500;
         window.addEventListener('resize', function (evt) {
-            if (self.resizeTimer !== 'undefined') {
+            if (typeof self.resizeTimer !== 'undefined') {
                 clearTimeout(self.resizeTimer);
             }
             self.resizeTimer = setTimeout(function () {

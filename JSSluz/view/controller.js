@@ -8,7 +8,7 @@
     module.Controller = function () {
         if (module.Controller.prototype.isInit === false) {
             module.Controller.prototype.isInit = true;
-            if (window.Mustache !== 'undefined') {
+            if (typeof window.Mustache !== 'undefined') {
                 module.Controller.prototype.parse = window.Mustache.parse;
                 module.Controller.prototype.render = window.Mustache.render;
             }
@@ -39,7 +39,7 @@
 
     module.Controller.prototype.loadUrlView = function (id, url_viewer, datas) {
         var self = this;
-        module.Support.loadData(url_viewer, function (xhr) {
+        module.Http.loadData(url_viewer, function (xhr) {
             var view = xhr.responseText;
             self.loadView(id, view, datas);
         });
@@ -47,7 +47,7 @@
 
     module.Controller.prototype.appendUrlViewChild = function (id, url_viewer, datas) {
         var self = this;
-        module.Support.loadData(url_viewer, function (xhr) {
+        module.Http.loadData(url_viewer, function (xhr) {
             var view = xhr.responseText;
             self.appendChild(id, view, datas);
         });
@@ -55,8 +55,8 @@
 
     module.Controller.prototype.parseFromString = function (source) {
         var element;
-//    var parser = new DOMParser();
-//    element = parser.parseFromString(source, "text/html").body;
+        // var parser = new DOMParser();
+        // element = parser.parseFromString(source, "text/html").body;
         element = document.createElement('div');
         element.innerHTML = source;
         return element.childNodes;
