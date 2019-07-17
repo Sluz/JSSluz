@@ -41,7 +41,9 @@
       
       var loader = new JSSluz.Dependencies([
         root + 'JSSluz/data/http.js',
+        root + 'JSSluz/data/data.js',
         root + 'JSSluz/data/json.js',
+        root + 'JSSluz/data/xml.js',
         root + 'JSSluz/util/geolocation.js',
         root + 'JSSluz/util/helper.js',
         root + 'JSSluz/view/controller.js',

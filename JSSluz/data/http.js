@@ -4,13 +4,13 @@
     if (typeof module.Support !== 'undefined') {
         return;
     }
-    
+
     module.Http = {
         loadData: function (url_or_params, success, error) {
             if (typeof url_or_params === 'string')
                 url_or_params = {method: 'GET', url: url_or_params};
             url_or_params.complete = url_or_params.complete || function (xhr) {
-                if (xhr.status === 200) {
+                if (xhr.status === 200 || xhr.status == 0) {
                     if (success) {
                         success(xhr);
                     } else if (error) {
@@ -63,17 +63,19 @@
                 throw new Error('XMLHttpRequest not supported.');
             }
             if (typeof params === "undefined" ||
-                    typeof params.url === "undefined") {
+                typeof params.url === "undefined") {
                 throw new Error('URL missing.');
             }
             params.body = params.body || null;
             params.method = params.method || 'GET';
-            params.asynchrone = params.asynchrone || true;
+            if (typeof params.asynchrone === 'undefined') {
+                params.asynchrone = true;
+            }
             var complete = params.complete || null;
             if (typeof complete !== 'function') {
                 throw new Error('complete is nit a Function.');
             }
-
+            
             var xhr = new XMLHttpRequest();
             if (params.enableCORS) {
                 if ("withCredentials" in xhr) {
@@ -117,6 +119,13 @@
                 }
                 xhr.open(params.method, params.url, params.asynchrone);
             }
+            
+            if (params.headers) {
+                for (var key in params.headers) {
+                    xhr.setRequestHeader(key, params.headers[key]);
+                }
+            }
+            
             return xhr.send(params.body);
         }
     };

@@ -17,6 +17,8 @@
             self.eventElement = document.querySelector(queryElement);
         }
 
+        self.internalEvent = {};
+
         if (typeof self.eventElement === 'undefined') {
             return null;
         } else {
@@ -29,7 +31,14 @@
     };
 
     module.Event.prototype.addEventListener = function (type, block) {
+        this.internalEvent[type] = block;
         this.eventElement.addEventListener(type, block);
+    };
+
+    module.Event.prototype.removeEventListener = function (type) {
+        if (typeof (this.internalEvent[type]) !== 'undefined') {
+            this.eventElement.removeEventListener(type, this.internalEvent[type]);
+        }
     };
 
     /**
